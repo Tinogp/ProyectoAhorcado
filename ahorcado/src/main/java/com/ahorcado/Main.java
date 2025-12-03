@@ -3,6 +3,7 @@ package com.ahorcado;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Main {
 
@@ -85,12 +86,14 @@ public class Main {
             for (int j = 0; j < 100; j++) {
                 System.out.println();
             }
-            while (errores < 6) {
+            while (errores < 6 && !palabra.equals(letras.stream().map(Object::toString).collect(Collectors.joining()))) {
                 System.out.println("Jugador 2, introduce la letra: ");
                 char letra = scanner.nextLine().charAt(0);
                 if (!letras.contains(letra)) {
-                    errores++;
                     letras.add(letra);
+                    if (!palabra.contains(letra + "")) {
+                        errores++;
+                    }
                 } else {
                     System.out.println("Letra repetida");
                 }
