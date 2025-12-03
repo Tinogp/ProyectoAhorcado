@@ -82,8 +82,9 @@ public class Main {
                 System.out.println("Quieres que tu palabra sea " + palabra + "? (s/n)");
                 respuesta = scanner.nextLine().toLowerCase();
             } while (!respuesta.equals("s"));
-            System.out.print("\033[H\033[2J");
-            System.out.flush();
+            for (int j = 0; j < 100; j++) {
+                System.out.println();
+            }
             while (errores < 6) {
                 System.out.println("Jugador 2, introduce la letra: ");
                 char letra = scanner.nextLine().charAt(0);
@@ -119,6 +120,6 @@ public class Main {
             }
         }
         System.out.println();
-        System.out.println(Estados_Ahorcados[errores]);
+        System.out.println(Estados_Ahorcados[6-errores]);
     }
 }
