@@ -3,10 +3,10 @@ package com.ahorcado;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 public class Main {
 
+    private static Integer errores = 0;
     private static final String[] Estados_Ahorcados = {
             // Etapa 0: Inicial
             """
@@ -70,7 +70,7 @@ public class Main {
         String palabra = "";
         String respuesta = "";
         List<Character> letras = new ArrayList<>();
-        Integer errores = 0;
+
         Scanner scanner = new Scanner(System.in);
         System.out.println("Introduce el numero de partidas: ");
         int numPartidas = Integer.parseInt(scanner.nextLine());
@@ -86,7 +86,8 @@ public class Main {
             for (int j = 0; j < 100; j++) {
                 System.out.println();
             }
-            while (errores < 6 && !palabra.equals(letras.stream().map(Object::toString).collect(Collectors.joining()))) {
+            mostrarEstadoPartida(palabra, letras);
+            while (errores < 6 && !comprobarPartida(palabra, letras)) {
                 System.out.println("Jugador 2, introduce la letra: ");
                 char letra = scanner.nextLine().charAt(0);
                 if (!letras.contains(letra)) {
@@ -113,16 +114,24 @@ public class Main {
     }
 
     private static void mostrarEstadoPartida(String palabra, List<Character> letras) {
-        int errores = 0;
         for (char c : palabra.toCharArray()) {
             if (letras.contains(c)) {
                 System.out.print(c);
             } else {
                 System.out.print("_");
-                errores++;
             }
         }
         System.out.println();
-        System.out.println(Estados_Ahorcados[6-errores]);
+        System.out.println();
+        System.out.println(Estados_Ahorcados[errores]);
+    }
+
+    private static boolean comprobarPartida(String palabra, List<Character> letras) {
+        for (int i = 0; i < palabra.length(); i++) {
+            if (!letras.contains(palabra.charAt(i))) {
+                return false;
+            }
+        }
+        return true;
     }
 }
